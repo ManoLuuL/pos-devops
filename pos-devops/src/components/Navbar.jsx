@@ -4,11 +4,12 @@ import { useAuthValue } from "../context/AuthContext"
 import styles from "./Navbar.module.css"
 import sair from "../../public/exit-svgrepo-com.svg"
 import logo from "./../../public/logoDevBlog.png"
+import userimg from "./../../public/user.svg"
 
 const Navbar = () => {
   const { logout } = userAuthentication()
   const { user } = useAuthValue()
-  console.log(user)
+
   return (
     <nav className={styles.navbar}>
       <NavLink className={styles.brand} to="/">
@@ -16,6 +17,11 @@ const Navbar = () => {
           <img src={logo} alt="Brand" width="50px" height="30px" /> Mini <span>Blog</span>
         </div>
       </NavLink>
+      {user && (<>
+        {`Olá ${user.displayName}`}
+        <img src={user.photoURL || userimg} alt="User" width="30px" height="30px" />
+        {`E-mail: ${user.email}`}
+      </>)}
       <ul className={styles.links_list}>
         <li>
           <NavLink
