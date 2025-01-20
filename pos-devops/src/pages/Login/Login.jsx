@@ -1,6 +1,6 @@
 import styles from "./Login.module.css"
-
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import { userAuthentication } from "../../hooks/userAuthentication"
 
 const Login = () => {
@@ -9,6 +9,7 @@ const Login = () => {
   const [error, setError] = useState("")
 
   const { login, error: authError, loading } = userAuthentication()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -59,12 +60,24 @@ const Login = () => {
             value={password}
           />
         </label>
-        {!loading && <button className="btn">Entrar</button>}
-        {loading && (
-          <button className="btn" disabled>
-            Aguarde...
+        <div className={styles.buttons} style={{
+          display: 'flex',
+          gap: '5px',
+        }}>
+          {!loading && <button className="btn">Entrar</button>}
+          {loading && (
+            <button className="btn" disabled>
+              Aguarde...
+            </button>
+          )}
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={() => navigate("/register")}
+          >
+            Cadastrar-se
           </button>
-        )}
+        </div>
         {error && <p className="error">{error}</p>}
       </form>
     </div>
